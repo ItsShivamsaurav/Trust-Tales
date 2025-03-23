@@ -3,10 +3,12 @@ import heart from "../assets/diamond-1857736_1280.png";
 import { useState } from "react";
 import axios from "axios";
 import { useUser } from "./context";
+import {jwtDecode} from "jwt-decode";
 
 function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setprofile } = useUser();
 
   const axiosPostData = async() => {
     const postData = {
@@ -17,6 +19,10 @@ function Signin() {
     try{
     const data = await axios.post(' http://localhost:3000/user/signin', postData)
     console.log(data)
+    const token = data.data.token;
+    const decoded = jwtDecode(`${token}`);
+    console.log("Decoded JWT:", decoded);
+    setprofile(decoded);
     }
     catch(err){
         console.log(err)

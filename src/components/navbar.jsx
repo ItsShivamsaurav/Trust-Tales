@@ -2,13 +2,19 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/birds.png";
 import { NotebookTabs } from "lucide-react";
 import { useState } from "react";
+import {useUser} from  "./context"
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {profile,setprofile} = useUser();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+ function handleSignOut(){
+   setprofile(null)
+ }
 
   return (
     <div className=" flex bg-white h-26 ">
@@ -28,12 +34,19 @@ function Navbar() {
         <NavLink to="/about" className="text-black">
           About
         </NavLink>
-        <NavLink to="/signin" className="text-black">
-          Signin
-        </NavLink>
         <NavLink to="/signup" className="text-black">
           Signup
         </NavLink>
+        {profile ? (
+          <NavLink onClick={handleSignOut} className="text-black">
+            Signout
+          </NavLink>
+        ) : (
+          <NavLink to="/signin" className="text-black">
+            Signin
+          </NavLink>
+          )}
+       
       </div>
 
       <div className="relative flex sm:hidden bg-yellow-300 flex-1 mt-5 mb-5 items-center justify-center rounded-t-3xl space-x-6 text-xl">

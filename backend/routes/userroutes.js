@@ -17,7 +17,7 @@ router.post("/signin", async (req, res) => {
   try {
     const token = await User.matchpasswordAndGenerateToken(email, password);
     console.log("User Verified");
-    return res.send(token);
+    return res.json({token});
     // return res.send("User Verified");
   } catch (error) {
     console.log(error);
