@@ -1,8 +1,5 @@
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import Navbar from './components/navbar'
 import Home from './components/home'
 import About from './components/about'  
@@ -11,6 +8,7 @@ import Signin from './components/signin'
 import Signup from './components/signup'
 import Diary from './components/diary'
 import Footer from './components/footer'
+import { UserProvider } from './components/context'
 
 
 import './App.css'
@@ -20,7 +18,7 @@ function App() {
   
 
   return(
-  
+  <UserProvider>
      <Router>
       <Navbar />
       <Routes>
@@ -34,6 +32,7 @@ function App() {
       </Routes>
       <Footer />
     </Router>
+  </UserProvider>
     
   )
 }
