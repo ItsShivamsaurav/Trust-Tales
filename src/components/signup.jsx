@@ -1,13 +1,37 @@
 
 import { useState } from "react";
+import axios from "axios";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const axiosPostUserInfo = async () => {
+    const userInfo = {
+      fullName : username,
+      email,
+      password
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3000/user/signup", userInfo);
+      if (response.status === 200) {
+        setShowSuccess(true);
+        setErrorMessage("");  
+        setTimeout(() => setShowSuccess(false), 3000);
+      }
+    } catch (error) {
+      setErrorMessage("Signup failed. Please try again.");
+      setTimeout(() => setErrorMessage(""), 3000);
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axiosPostUserInfo();
     console.log(username
       , email, password);
       e.target.reset();
@@ -17,6 +41,18 @@ function Signup() {
   return (
     <div className=" bg-emerald-400  flex h-[var(--custom-height)] items-center justify-center">
       <div className="flex-col  content-end justify-center p-8">
+
+      {showSuccess && (
+        <div className="mt-4 mb-4 px-4 py-2 text-green-700 bg-green-100 border border-green-400 rounded-lg">
+          Signup successful! 🎉 Welcome aboard!
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mt-4 mb-4 px-4 py-2 text-red-700 bg-red-100 border border-red-400 rounded-lg">
+          {errorMessage}
+        </div>
+      )}
         <div className=" bg-emerald-100 mb-4 p-2 text-center rounded-tr-3xl shadow-md">
           <h4>
             <span className="text-3xl font-serif font-medium">SignUp</span>
