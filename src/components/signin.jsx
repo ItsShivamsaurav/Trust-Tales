@@ -1,9 +1,9 @@
-import React from "react";
-import heart from "../assets/diamond-1857736_1280.png";
 import { useState } from "react";
 import axios from "axios";
 import { useUser } from "./context";
 import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
+import { LogIn, Mail, Lock } from "lucide-react";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -47,11 +47,85 @@ function Signin() {
   };
 
   return (
-    <div className=" bg-emerald-400  flex h-[var(--custom-height)] items-center justify-center">
-      <div className="  flex-col   content-end justify-center p-8">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl">
+        <div className="text-center">
+          <LogIn className="h-12 w-12 text-purple-600 mx-auto" />
+          <h2 className="mt-6 text-3xl font-bold text-gray-800">
+            Welcome back
+          </h2>
+          <p className="mt-2 text-gray-600">
+            "Every day is a new page in your diary of life"
+          </p>
+        </div>
+
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <div className="mt-1 relative">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="appearance-none block w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Enter your email"
+                />
+                <Mail className="h-5 w-5 text-gray-400 absolute left-4 top-3.5" />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <div className="mt-1 relative">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="appearance-none block w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Enter your password"
+                />
+                <Lock className="h-5 w-5 text-gray-400 absolute left-4 top-3.5" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200"
+            >
+              Sign In
+            </button>
+          </div>
+
+          <div className="text-center text-sm">
+            <span className="text-gray-600">Don't have an account? </span>
+            <Link
+              to="/signup"
+              className="font-medium text-purple-600 hover:text-purple-500"
+            >
+              Sign up
+            </Link>
+          </div>
+        </form>
         {showSuccess && (
           <div className="mt-4 mb-4 px-4 py-2 text-green-700 bg-green-100 border border-green-400 rounded-lg">
-            Login successful! 🎉!
+            login successful! 🎉 Welcome aboard!
           </div>
         )}
 
@@ -60,63 +134,6 @@ function Signin() {
             {errorMessage}
           </div>
         )}
-        <div className="bg-emerald-100 mb-4 p-6 text-center rounded-tr-3xl shadow-md ">
-          <h4>
-            <span className="text-3xl font-serif font-medium">
-              Welcome Back
-            </span>
-          </h4>
-          <p className="text-sm">please enter your details to signIn</p>
-        </div>
-        <div className=" bg-emerald-100  w-full max-w-md shadow-md p-6 rounded-b-3xl flex items-center justify-center ">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4 ">
-              <label htmlFor="exampleInputEmail1" className="block text-black">
-                Email address
-              </label>
-              <input
-                type="email"
-                className="form-input mt-1 block w-full outline-blue-500 outline-1 focus:outline-green-500 p-2 rounded-lg"
-                onChange={(e) => setEmail(e.target.value)}
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              <div id="emailHelp" className="text-sm text-gray-600">
-                We'll never share your email with anyone else.
-              </div>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="exampleInputPassword1"
-                className="block text-black"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-input mt-1 block w-full outline-blue-500 outline-1 focus:outline-green-500 p-2 rounded-lg"
-                onChange={(e) => setPassword(e.target.value)}
-                id="exampleInputPassword1"
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                id="exampleCheck1"
-              />
-              <label className="ml-2 text-gray-700" htmlFor="exampleCheck1">
-                Check me out
-              </label>
-            </div>
-            <button
-              type="submit"
-              className="btn bg-blue-800 text-white py-2 px-4 rounded"
-            >
-              Submit
-            </button>
-          </form>
-        </div>
       </div>
     </div>
   );
