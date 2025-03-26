@@ -19,39 +19,27 @@ router.get("/private", async (req, res) => {
   res.send(entry);
 });
 
-router.post("/public", async (req, res) => {
-  const { date, entry, mood, salutation, signature, email, title } = req.body;
+router.post("/", async (req, res) => {
+  const {
+    date,
+    content,
+    mood,
+    salutation,
+    signature,
+    email,
+    title,
+    isPrivate,
+  } = req.body;
   try {
     const diaryEntry = await DiaryEntry.create({
       date,
-      entry,
+      content,
       mood,
       salutation,
       signature,
       email,
       title,
-      isPrivate: false,
-    });
-    res.send(diaryEntry);
-  } catch (error) {
-    console.log(error);
-    res.send("Error in creating entry");
-  }
-});
-
-
-router.post("/private", async (req, res) => {
-  const { date, entry, mood, salutation, signature, email, title } = req.body;
-  try {
-    const diaryEntry = await DiaryEntry.create({
-      date,
-      entry,
-      mood,
-      salutation,
-      signature,
-      email,
-      title,
-      isPrivate: true,
+      isPrivate,
     });
     res.send(diaryEntry);
   } catch (error) {
